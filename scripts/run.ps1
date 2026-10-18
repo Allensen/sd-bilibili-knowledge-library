@@ -1,4 +1,4 @@
-param(
+﻿param(
     [ValidateSet('run','publish','evidence','doctor','setup')][string]$Action = 'run',
     [string]$InputUrl,
     [string]$Output,
