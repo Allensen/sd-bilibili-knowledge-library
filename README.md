@@ -10,7 +10,7 @@
 
 ![从收藏到可随时翻阅的知识库](docs/overview.svg)
 
-[快速开始](#快速开始) · [看看整理结果](#你最后拿到什么) · [下载 Skill ZIP](https://github.com/Allensen/sd-bilibili-knowledge-library-/raw/refs/heads/main/downloads/sd-bilibili-knowledge-library-0.2.1.zip) · [使用范围](#当前版本适合什么环境)
+[快速开始](#快速开始) · [看看整理结果](#你最后拿到什么) · [下载 Skill ZIP](https://github.com/Allensen/sd-bilibili-knowledge-library/raw/refs/heads/main/downloads/sd-bilibili-knowledge-library-0.2.1.zip) · [使用范围](#当前版本适合什么环境)
 
 > 当前版本 **v0.2.1 · Windows x64 测试版**。通过支持本地文件、命令执行和联网的 Agent 使用；安装与实际流程已在 Windows x64 上验证。无需独立显卡，低配电脑的处理速度尚未实测。
 
@@ -81,7 +81,7 @@ HTML 的文字和搜索可离线使用；回看 B 站视频需要联网。保存
 
 ```text
 请帮我安装这个 Skill：
-https://github.com/Allensen/sd-bilibili-knowledge-library-
+https://github.com/Allensen/sd-bilibili-knowledge-library
 
 读取仓库根目录的 SKILL.md，把完整 Skill 安装到你支持的技能目录，
 目录名保留为 sd-bilibili-knowledge-library。
@@ -95,7 +95,7 @@ https://github.com/Allensen/sd-bilibili-knowledge-library-
 <details>
 <summary>想自己放文件：手动安装方式</summary>
 
-下载 [v0.2.1 Skill ZIP](https://github.com/Allensen/sd-bilibili-knowledge-library-/raw/refs/heads/main/downloads/sd-bilibili-knowledge-library-0.2.1.zip)，解压后得到 `sd-bilibili-knowledge-library` 文件夹，将它放到 Agent 的技能目录中。不要多套一层同名目录。可用[校验文件](downloads/SHA256SUMS.txt)检查下载完整性。
+下载 [v0.2.1 Skill ZIP](https://github.com/Allensen/sd-bilibili-knowledge-library/raw/refs/heads/main/downloads/sd-bilibili-knowledge-library-0.2.1.zip)，解压后得到 `sd-bilibili-knowledge-library` 文件夹，将它放到 Agent 的技能目录中。不要多套一层同名目录。可用[校验文件](downloads/SHA256SUMS.txt)检查下载完整性。
 
 以当前 Codex 本地技能目录为例：
 
@@ -258,7 +258,7 @@ python -m unittest discover -s tests -v
 
 ## 反馈与许可
 
-遇到问题，可以[提交 Issue](https://github.com/Allensen/sd-bilibili-knowledge-library-/issues)。请描述系统版本、停在哪一步、能否稳定复现，并只提供已去除私人信息的报错。公开可访问的示例链接有助于定位问题。
+遇到问题，可以[提交 Issue](https://github.com/Allensen/sd-bilibili-knowledge-library/issues)。请描述系统版本、停在哪一步、能否稳定复现，并只提供已去除私人信息的报错。公开可访问的示例链接有助于定位问题。
 
 如果它帮你把某条「一直想看」的视频变成了真正用上的笔记，欢迎分享你的使用方式，也可以点个 Star 方便以后找到。
 

@@ -29,7 +29,7 @@
 
 ## 下载与使用
 
-下载 [sd-bilibili-knowledge-library-0.2.1.zip](https://github.com/Allensen/sd-bilibili-knowledge-library-/raw/refs/heads/main/downloads/sd-bilibili-knowledge-library-0.2.1.zip)，由 Agent 安装完整同名文件夹。使用方法见仓库首页。
+下载 [sd-bilibili-knowledge-library-0.2.1.zip](https://github.com/Allensen/sd-bilibili-knowledge-library/raw/refs/heads/main/downloads/sd-bilibili-knowledge-library-0.2.1.zip)，由 Agent 安装完整同名文件夹。使用方法见仓库首页。
 
 ZIP 包含代码、Skill 指令和必要说明，不包含模型、运行缓存、用户收藏或凭据。首次执行需要联网；环境、模型与媒体的下载耗时单独计算。
 
