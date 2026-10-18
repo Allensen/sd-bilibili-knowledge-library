@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SD · 收藏知识库</title><style>
+:root{font-family:system-ui,-apple-system,"Microsoft YaHei",sans-serif;color:#263137;background:#f4f5f3;line-height:1.75}*{box-sizing:border-box}body{margin:0}header{background:#173d39;color:#fff;padding:42px max(24px,calc((100vw - 980px)/2)) 32px}header p{color:#c6d9d3;margin:7px 0 22px}h1{font-size:30px;letter-spacing:.02em;margin:0}input{width:100%;padding:14px 18px;border:1px solid #d2ddd8;border-radius:8px;font:inherit;background:#fff;color:#263137}main{max-width:1028px;margin:auto;padding:24px}h2{font-size:23px;margin:8px 0 12px}h3{font-size:18px;margin:0 0 10px}h4{margin:0 0 8px}.card{background:white;border:1px solid #dfe4df;border-radius:10px;padding:24px;margin:16px 0}.meta,.sources{color:#66716d;font-size:13px}.tag{display:inline-block;background:#e8efeb;padding:2px 10px;border-radius:5px;margin-right:7px;font-size:12px}.sources a{margin-right:12px}a{color:#166754;text-underline-offset:3px}.lead{font-size:16px}.tip{background:#f1f5f1;padding:12px 16px;border-left:3px solid #86a89b}.caution{background:#fff8e9;border-color:#eadcbc}.transcript p{padding:12px 0;border-bottom:1px solid #edf0ed;margin:0}.transcript a{font-variant-numeric:tabular-nums;font-size:13px;margin-right:10px}summary{cursor:pointer;font-weight:600}details[open]>summary{margin-bottom:18px}img{max-width:100%;height:auto;border:1px solid #dfe4df;border-radius:5px}figcaption{font-size:12px;color:#66716d}figure{margin:20px 0 0}#status{margin:0 0 18px;color:#66716d;font-size:14px}.empty{padding:30px;background:#fff;border-radius:8px}nav{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;margin-top:14px}ul{padding-left:22px}.muted{font-size:13px;color:#66716d}.article{margin-bottom:42px}footer{max-width:980px;margin:0 auto;padding:16px 0 32px;font-size:12px;color:#66716d}@media(max-width:600px){header{padding:26px 18px}main{padding:16px}.card{padding:18px}h1{font-size:25px}}
+.catalog{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:24px}.catalog a{padding:16px;background:#e8efeb;border:1px solid #d2ddd8;border-radius:8px;text-decoration:none}.catalog a:hover{background:#dce9e1}.catalog small{display:block;color:#66716d;margin-top:5px}
+</style></head><body>
+<header><h1>把收藏变成可用的知识</h1><p>先读方法，再看原文；每个知识点都能回到视频。</p><input id="search" type="search" aria-label="搜索知识点或原文" placeholder="搜索问题、知识点或原文，例如：遮罩、透明度、快捷键"></header>
+<main><div id="batch-status" class="card"></div><p id="status" role="status" aria-live="polite"></p><nav id="catalog" class="catalog" aria-label="视频目录"></nav><div id="library"></div></main>
+<footer>内容依据原视频整理。机器转写仍可能有误；理解提示为整理归纳，待核事项单独保留。</footer>
+<script id="data" type="application/json">__LIBRARY_DATA__</script>
+<script id="batch-data" type="application/json">__BATCH_DATA__</script>
+<script>
+const entries=JSON.parse(document.getElementById('data').textContent),root=document.getElementById('library');
+function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
+function time(s){return `${Math.floor(s/60).toString().padStart(2,'0')}:${Math.floor(s%60).toString().padStart(2,'0')}`}
+function link(text,url){const a=el('a',text);a.href=url;a.target='_blank';a.rel='noopener';return a}
+function list(items){const u=el('ul');items.forEach(x=>u.append(el('li',x)));return u}
+function videoLink(e,s){return e.source.url+'&t='+Math.floor(s)}
+const batch=JSON.parse(document.getElementById('batch-data').textContent),batchPanel=document.getElementById('batch-status');
+const stages={pending:'待处理',processing:'处理中',needs_notes:'原文已就绪，待整理',published:'已生成笔记',failed:'处理失败',unavailable:'不可访问'};
+batchPanel.append(el('h3','本次处理进度'));
+const pending=(batch.items||[]).filter(i=>i.status!=='published');
+batchPanel.append(el('p',`${(batch.items||[]).filter(i=>i.status==='published').length} 条已生成 · ${pending.length} 条尚未完成 · ${(batch.unavailable||[]).length} 条不可访问`));
+if(pending.length||batch.unavailable?.length){const detail=el('details');detail.append(el('summary','查看尚未完成的条目'),list([...pending,...(batch.unavailable||[])].map(i=>`${i.source?.title||i.title||i.id}：${stages[i.status]||i.status}${i.error?'（'+i.error+'）':''}`)));batchPanel.append(detail)}
+function render(query=''){
+ root.replaceChildren();const catalog=document.getElementById('catalog');catalog.replaceChildren();let hits=0,documents=0;const q=query.trim().toLowerCase();
+ entries.forEach((entry,index)=>{
+  const a=entry.article,segments=new Map(entry.transcript.map(s=>[s.id,s])),frames=new Map(entry.frames.map(f=>[f.id,f]));
+  const matches=text=>!q||text.toLowerCase().includes(q);
+  const points=a.knowledge.filter(k=>matches([k.title,k.explanation,...(k.details||[]),k.learning_tip||''].join(' ')));
+  const utterances=entry.transcript.filter(s=>matches(s.text));
+  const metaMatch=matches([a.title,...a.tags,...a.takeaways,...a.caveats].join(' '));
+  if(!metaMatch&&!points.length&&!utterances.length)return;
+  documents++;
+  const wrap=el('section',undefined,'article'),intro=el('div',undefined,'card');
+  wrap.id=`video-${entry.source.bvid}-p${entry.source.page}`;const shortcut=el('a',a.title);shortcut.href='#'+wrap.id;shortcut.append(el('small',`${time(entry.source.duration)} · ${q?points.length:a.knowledge.length} 个${q?'匹配':''}知识点 · ${q?utterances.length:entry.transcript.length} 段${q?'匹配':''}原文`));catalog.append(shortcut);
+  intro.append(el('div',`${entry.source.author} · 原视频 ${time(entry.source.duration)} · 带来源的学习笔记`,'meta'),el('h2',a.title));
+  const tags=el('div');a.tags.forEach(t=>tags.append(el('span',t,'tag')));intro.append(tags,list(a.takeaways));
+  const nav=el('nav');nav.append(link('原视频',entry.source.url));const note=link('下载 Markdown',`library/${entry.source.bvid}-p${entry.source.page}/note.md`);note.download='';nav.append(note);
+  const jump=el('a','阅读全文');jump.href=`#transcript-${index}`;jump.onclick=event=>{event.preventDefault();if(q){document.getElementById('search').value='';render()}const target=document.getElementById(`transcript-${index}`);target.open=true;target.scrollIntoView({block:'start'})};nav.append(jump);intro.append(nav);wrap.append(intro);
+  const shown=q?points:a.knowledge;
+  shown.forEach(k=>{const card=el('section',undefined,'card knowledge');card.append(el('h3',k.title),el('p',k.explanation));if(k.details?.length)card.append(list(k.details));if(k.learning_tip)card.append(el('p','理解提示 · '+k.learning_tip,'tip'));const refs=el('div','回看视频：','sources');k.source_ids.forEach(id=>{const s=segments.get(id);refs.append(link(time(s.start),videoLink(entry,s.start)))});card.append(refs);
+   if(k.frame_ids?.length){const evidence=el('details');evidence.append(el('summary',`查看原视频画面 · ${k.frame_ids.length} 张`));k.frame_ids.forEach(id=>{const f=frames.get(id),figure=el('figure'),img=el('img');img.src=`library/${entry.source.bvid}-p${entry.source.page}/${f.file}`;img.alt=`原视频 ${time(f.second)} 画面证据`;img.loading='lazy';const caption=el('figcaption','原视频画面 · ');caption.append(link(time(f.second),videoLink(entry,f.second)));figure.append(img,caption);evidence.append(figure)});card.append(evidence)}wrap.append(card);hits++});
+  const cautions=el('section',undefined,'card caution');cautions.append(el('h3','仍需核对的内容'),list(a.caveats));wrap.append(cautions);
+  const full=el('details',undefined,'card transcript');full.id=`transcript-${index}`;full.open=!!q;full.append(el('summary',`全文转写 · ${q?utterances.length:entry.transcript.length} 段${q?'匹配':''}`),el('p','已保留口播转写；有画面依据的局部修订见记录，其余尚未逐字听校。','muted'));
+  (q?utterances:entry.transcript).forEach(s=>{const p=el('p');p.append(link(time(s.start),videoLink(entry,s.start)),document.createTextNode(s.text));full.append(p)});wrap.append(full);hits+=q?utterances.length:0;
+  if(a.corrections?.length){const changes=el('details',undefined,'card');changes.append(el('summary','局部修订记录'),list(a.corrections.map(c=>`${c.before} → ${c.after}（${c.reason}）`)));wrap.append(changes)}
+  root.append(wrap);
+ });
+ document.getElementById('status').textContent=q?`搜索“${query}” · ${documents} 条视频相关 · ${hits} 个知识点或原文片段匹配`:`已整理 ${entries.length} 条视频 · 可搜索知识点与全文`;
+ if(!root.children.length)root.append(el('p','没有找到匹配内容，请尝试其他关键词。','empty'));
+}
+document.getElementById('search').addEventListener('input',e=>render(e.target.value));render();
+</script></body></html>

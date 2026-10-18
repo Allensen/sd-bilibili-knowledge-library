@@ -1,0 +1,4 @@
+interface:
+  display_name: "SD · B 站收藏知识库"
+  short_description: "将 B 站收藏整理为带原文与时间链接的 Markdown、HTML 知识库"
+  default_prompt: "使用 $sd-bilibili-knowledge-library 把这个 B 站收藏夹整理成可阅读、可回看的知识库。"

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480" role="img" aria-labelledby="title desc">
+<title id="title">SD B站收藏知识库</title><desc id="desc">把收藏夹里的视频整理为重点、笔记和带时间链接的知识库。功能示意。</desc>
+<rect width="1200" height="480" rx="22" fill="#173d39"/>
+<g font-family="Microsoft YaHei,system-ui,sans-serif">
+<text x="56" y="66" fill="#a6c8b6" font-size="17" letter-spacing="3">SD / BILIBILI KNOWLEDGE LIBRARY</text>
+<text x="56" y="132" fill="#fff" font-size="40" font-weight="700">你收藏过的好内容，值得再用上一次。</text>
+<text x="56" y="179" fill="#c6d9d3" font-size="21">把链接交给 Agent，得到能读、能搜、能回看原片的学习笔记。</text>
+<g fill="#f5f7f3"><rect x="56" y="224" width="346" height="171" rx="12"/><rect x="426" y="224" width="346" height="171" rx="12"/><rect x="796" y="224" width="348" height="171" rx="12"/></g>
+<g fill="#173d39" font-size="27" font-weight="700"><text x="82" y="274">01 先看重点</text><text x="452" y="274">02 留好笔记</text><text x="822" y="274">03 随时找回来</text></g>
+<g fill="#53665f" font-size="20"><text x="82" y="320">先知道讲了什么，</text><text x="82" y="352">再决定花时间学哪一条。</text><text x="452" y="320">方法、步骤和例子，</text><text x="452" y="352">下次用到时直接翻。</text><text x="822" y="320">搜到知识点，</text><text x="822" y="352">点时间回到原片那一段。</text></g>
+<text x="56" y="443" fill="#a6c8b6" font-size="16">Markdown + HTML · 保留全文与来源 · Windows x64 测试版</text>
+<text x="1090" y="443" fill="#a6c8b6" font-size="14">功能示意</text>
+</g></svg>
